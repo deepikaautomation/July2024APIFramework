@@ -1,0 +1,1 @@
+package com.qa.amedus.api.tests;
