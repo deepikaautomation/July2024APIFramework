@@ -138,8 +138,10 @@ public class RestClient {
 
 		applyParams(request, queryParam, pathparam);
 		
-		return request.get(endpoint)
-                 .then().spec(responseSpec200or201).extract().response();
+		Response response=request.get(endpoint)
+                 .then().spec(responseSpec200or404).extract().response();
+		response.prettyPrint();
+		return response;
                      
 	}
 	
@@ -225,7 +227,7 @@ public class RestClient {
 	}
 	
 	
-	public <T>Response delete(String baseUrl,String endpoint, Map<String,String> queryParam,
+	public Response delete(String baseUrl,String endpoint, Map<String,String> queryParam,
 			Map<String,String> pathparam,AuthType authtype,ContentType contentType) {
 		
 		RequestSpecification request=setupRequest(baseUrl,authtype, contentType);

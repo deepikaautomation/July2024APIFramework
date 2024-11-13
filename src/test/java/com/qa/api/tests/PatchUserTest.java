@@ -46,23 +46,34 @@ public class PatchUserTest extends BaseTest {
 
 
 
-
-//Update the same user using setter
-	user.setName("updtaename");
 	user.setGender("female");
-	user.setStatus("inactve");
+	user.setEmail(StringUtility.getrandomEmailid());
 	
-//Update the same userid
-	Response responsePatch=restClient.patch(BASE_URL_GOREST,"/public/v2/users/" +userid, user, null, null, AuthType.BEARER_TOKEN, ContentType.JSON);
+	
+	//3. PATCH: update the same user using the same user id
+	Response responsePUT = restClient.patch(BASE_URL_GOREST, "/public/v2/users/"+userid, user, null, null, AuthType.BEARER_TOKEN, ContentType.JSON);
+	Assert.assertEquals(responsePUT.getStatusCode(), 200);
+	Assert.assertEquals(responsePUT.jsonPath().getString("id"), userid);
+	Assert.assertEquals(responsePUT.jsonPath().getString("email"), user.getEmail());
+	
 
-
-
-response.prettyPrint();
-Assert.assertEquals(responsePatch.getStatusCode(), 200);
-Assert.assertEquals(responsePatch.jsonPath().getString("id"),userid);
-Assert.assertEquals(responsePatch.jsonPath().getString("status"),user.getStatus());
-Assert.assertEquals(responsePatch.jsonPath().getString("gender"),user.getGender());
-
+	/*
+	 * //Update the same user using setter user.setName("updtdame");
+	 * user.setGender("female"); user.setStatus("inactve");
+	 * 
+	 * //Update the same userid Response
+	 * responsePatch=restClient.patch(BASE_URL_GOREST,"/public/v2/users/" +userid,
+	 * user, null, null, AuthType.BEARER_TOKEN, ContentType.JSON);
+	 * 
+	 * 
+	 * 
+	 * response.prettyPrint(); Assert.assertEquals(responsePatch.getStatusCode(),
+	 * 200); Assert.assertEquals(responsePatch.jsonPath().getString("id"),userid);
+	 * Assert.assertEquals(responsePatch.jsonPath().getString("status"),user.
+	 * getStatus());
+	 * Assert.assertEquals(responsePatch.jsonPath().getString("gender"),user.
+	 * getGender());
+	 */
 }
 	
 }
